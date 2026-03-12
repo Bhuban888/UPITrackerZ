@@ -7,7 +7,6 @@ import com.upitracker.app.data.model.Transaction
 import com.upitracker.app.data.model.TransactionType
 import com.upitracker.app.data.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,7 +31,6 @@ class MainViewModel @Inject constructor(
     private val _filterType = MutableStateFlow<TransactionType?>(null)
     val filterType = _filterType.asStateFlow()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val filteredTransactions: StateFlow<List<Transaction>> = combine(
         repository.getAllTransactions(),
         _searchQuery,
@@ -68,31 +66,11 @@ class MainViewModel @Inject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DashboardUiState())
 
-    fun setSearchQuery(query: String) {
-        _searchQuery.value = query
-    }
-
-    fun setFilterType(type: TransactionType?) {
-        _filterType.value = type
-    }
-
-    fun deleteTransaction(transaction: Transaction) {
-        viewModelScope.launch { repository.delete(transaction) }
-    }
-
-    fun updateTransaction(transaction: Transaction) {
-        viewModelScope.launch { repository.update(transaction) }
-    }
-
-    fun addManualTransaction(transaction: Transaction) {
-        viewModelScope.launch { repository.insert(transaction) }
-    }
-
-    fun upsertBudget(budget: Budget) {
-        viewModelScope.launch { repository.upsertBudget(budget) }
-    }
-
-    fun deleteBudget(budget: Budget) {
-        viewModelScope.launch { repository.deleteBudget(budget) }
-    }
+    fun setSearchQuery(query: String) { _searchQuery.value = query }
+    fun setFilterType(type: TransactionType?) { _filterType.value = type }
+    fun deleteTransaction(transaction: Transaction) { viewModelScope.launch { repository.delete(transaction) } }
+    fun updateTransaction(transaction: Transaction) { viewModelScope.launch { repository.update(transaction) } }
+    fun addManualTransaction(transaction: Transaction) { viewModelScope.launch { repository.insert(transaction) } }
+    fun upsertBudget(budget: Budget) { viewModelScope.launch { repository.upsertBudget(budget) } }
+    fun deleteBudget(budget: Budget) { viewModelScope.launch { repository.deleteBudget(budget) } }
 }
