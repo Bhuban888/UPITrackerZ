@@ -9,7 +9,6 @@ plugins {
 android {
     namespace = "com.upitracker.app"
     compileSdk = 35
-
     defaultConfig {
         applicationId = "com.upitracker.app"
         minSdk = 26
@@ -18,7 +17,6 @@ android {
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
