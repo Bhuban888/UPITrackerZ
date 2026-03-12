@@ -1,0 +1,3 @@
+-keep class com.upitracker.app.data.model.** { *; }
+-keepattributes *Annotation*
+-dontwarn okhttp3.**
